@@ -2,8 +2,16 @@ define(function(require) {
   var React = require('react');
   var ReactSuite = require('jasmine_react');
   var Component = React.createClass({
+    getDefaultProps: function() {
+      return {
+        name: ''
+      };
+    }
+    ,
     render: function() {
-      return React.DOM.div();
+      return React.DOM.div({
+        children: React.DOM.span({}, "Hello " + this.props.name)
+      });
     }
   });
 
@@ -28,6 +36,16 @@ define(function(require) {
 
     it('should mount tested component', function() {
       expect(this.subject.isMounted()).toBeTruthy();
+    });
+
+    describe('#setProps', function() {
+      it('should work', function() {
+        setProps({ name: 'Ahmad' });
+        expect(find('span').innerText).toEqual('Hello Ahmad');
+
+        setProps({ name: 'Zaid' });
+        expect(find('span').innerText).toEqual('Hello Zaid');
+      });
     });
   });
 });
