@@ -6,8 +6,8 @@ define(function(require) {
       return {
         name: ''
       };
-    }
-    ,
+    },
+
     render: function() {
       return React.DOM.div({
         children: React.DOM.span({}, "Hello " + this.props.name)

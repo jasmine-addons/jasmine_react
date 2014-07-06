@@ -3,6 +3,11 @@ module.exports = {
     nospawn: false
   },
 
+  lint: {
+    files: [ 'lib/**/*', 'test/**/*' ],
+    tasks: [ 'jshint' ]
+  },
+
   tests: {
     files: [ 'test/**/*.js', 'lib/**/*.js' ],
     tasks: [ 'test' ]
