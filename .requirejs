@@ -1,0 +1,16 @@
+requirejs.config({
+  paths: {
+    'underscore': '../vendor/underscore',
+    'lodash': '../vendor/underscore',
+    'jquery': '../vendor/jquery',
+    'react': '../vendor/react-0.10.0',
+    'rsvp': '../vendor/rsvp',
+  },
+
+  shim: {
+    'underscore': { exports: '_' },
+    'lodash': { exports: '_' },
+    'jquery': { exports: '$' },
+    'react': { exports: 'React' }
+  }
+});
