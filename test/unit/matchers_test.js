@@ -28,6 +28,51 @@ define(function(require) {
         })
       });
 
+      it('should work', function() {
+        expect(function() {
+          subject.sendAction('foo');
+        }).toSendAction('foo');
+      });
+
+      it('should work with arguments', function() {
+        expect(function() {
+          subject.sendAction('foo', { id: '1' });
+        }).toSendAction({
+          action: 'foo',
+          args: {
+            id: '1'
+          }
+        });
+      });
+
+      it('should work with argument mismatch', function() {
+        expect(function() {
+          subject.sendAction('foo', { id: '2' });
+        }).not.toSendAction({
+          action: 'foo',
+          args: {
+            id: '1'
+          }
+        });
+      });
+
+      it('should work with multiple calls', function() {
+        expect(function() {
+          subject.sendAction('something', { id: '1' });
+        }).toSendAction({
+          action: 'something',
+          args: {
+            id: '1'
+          }
+        });
+
+        expect(function() {
+          subject.sendAction('somethingElse');
+        }).toSendAction({
+          action: 'somethingElse'
+        });
+      });
+
       it('should catch and throw handler errors', function() {
         spyOn(console, 'error');
 
@@ -36,6 +81,14 @@ define(function(require) {
             click('button');
           }).toSendAction('something');
         }).toThrowError(/Cannot read property 'bar'|evaluating 'this.props.bar'/);
+      });
+
+      it('should not intercept other action requests', function() {
+        expect(function() {
+          subject.sendAction('something').then(function() {
+            subject.sendAction('somethingElse');
+          });
+        }).toSendAction('something');
       });
     });
   });
