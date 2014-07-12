@@ -32,5 +32,41 @@ define(function(require) {
         expect(subject.state.name).toEqual('Ahmad');
       });
     });
+
+    describe('#select', function() {
+      this.reactSuite({
+        type: React.createClass({
+          mixins: [ React.addons.LinkedStateMixin ],
+          getInitialState: function() {
+            return {
+              currency: null
+            };
+          },
+
+          render: function() {
+            return React.DOM.div({
+              children: [
+                React.DOM.select({
+                  name: "currency",
+                  valueLink: this.linkState('currency'),
+                  children: ['EUR', 'JOD', 'USD'].map(function(currency) {
+                    return React.DOM.option({
+                      value: currency,
+                      children: currency
+                    });
+                  })
+                })
+              ]
+            });
+          }
+        })
+      });
+
+      it('should work', function() {
+        setState({ currency: 'USD' });
+        select('[name="currency"]', 'JOD');
+        expect(subject.state.currency).toEqual('JOD');
+      });
+    });
   });
 });
