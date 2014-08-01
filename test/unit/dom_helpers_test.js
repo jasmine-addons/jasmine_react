@@ -68,5 +68,68 @@ define(function(require) {
         expect(subject.state.currency).toEqual('JOD');
       });
     });
+
+    describe('#check', function() {
+      this.reactSuite({
+        type: React.createClass({
+          mixins: [ React.addons.LinkedStateMixin ],
+
+          getInitialState: function() {
+            return {
+              categories: []
+            };
+          },
+
+          render: function() {
+            return React.DOM.div({
+              children: ['Food', 'Shopping', 'Disco'].map(function(category) {
+                var isChecked = this.state.categories.indexOf(category) > -1;
+
+                return React.DOM.label({
+                  key: category,
+                  children: [
+                    React.DOM.input({
+                      type: 'checkbox',
+                      onChange: this.addCategory,
+                      checked: isChecked,
+                      value: category
+                    }),
+
+                    React.DOM.span({}, category),
+                  ]
+                });
+              }.bind(this))
+            });
+          },
+
+          addCategory: function(e) {
+            var isChecked = e.target.checked;
+            var categories = [].concat(this.state.categories);
+            var category = e.target.value;
+
+            if (!isChecked) {
+              if (categories.indexOf(category) > -1) {
+                categories.splice(categories.indexOf(category), 1);
+              }
+            }
+            else {
+              if (categories.indexOf(category) === -1) {
+                categories.push(category);
+              }
+            }
+
+            this.setState({
+              categories: categories
+            });
+          }
+        })
+      });
+
+      it('should work', function() {
+        check('[value="Food"]');
+        expect(subject.state.categories).toEqual(['Food']);
+        expect(find('[value="Food"]').checked).toBe(true);
+      });
+    })
   });
 });

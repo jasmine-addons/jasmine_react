@@ -4,7 +4,7 @@ module.exports = {
       baseUrl: './lib',
       out: 'dist/jasmine_react.js',
       mainConfigFile: '.requirejs',
-      optimize: 'uglify2',
+      optimize: 'none',
 
       removeCombined:           false,
       inlineText:               true,
