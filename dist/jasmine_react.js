@@ -483,9 +483,7 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
   var ReactSuite = function(suite, componentType, container) {
     suite.mkPromiseSuite();
     suite.beforeEach(function() {
-      // expect(function() {
-        this.subject = React.renderComponent(componentType(), container);
-      // }.bind(this)).not.toThrow();
+      this.subject = React.renderComponent(componentType(), container);
 
       Matchers.install(this, this.subject);
       DOMHelpers.install(GLOBAL, this.subject);
