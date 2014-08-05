@@ -481,7 +481,7 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
 
   /** @internal */
   var ReactSuite = function(suite, componentType, container) {
-    suite.mkPromiseSuite();
+    suite.promiseSuite = true;
     suite.beforeEach(function() {
       this.subject = React.renderComponent(componentType(), container);
 
@@ -511,7 +511,7 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
    * Turn a jasmine Suite into one suitable for testing React components.
    *
    * > WARNING!!!
-   * > This requires jasmine.promiseSuite to be available from PixyJasmine.
+   * > This requires jasmine.promiseSuite to be available from jasmine-rsvp.
    *
    * @param {Object} options
    *        Options to configure the suite.
