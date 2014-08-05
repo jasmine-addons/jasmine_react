@@ -1,5 +1,5 @@
 {
-  "name": "jasmine_react",
+  "name": "jasmine-react",
   "description": "Jasmine utilities and helpers for testing React components.",
   "version": "1.0.6",
   "homepage": "https://github.com/amireh/jasmine_react",
@@ -40,7 +40,7 @@
     "lodash": "1.2.x",
     "jquery": "2.x",
     "react": "0.10.x",
-    "pixy": "1.x",
-    "rsvp": "3.x"
+    "rsvp": "3.x",
+    "jasmine-rsvp": ">= 1.0.0"
   }
 }

@@ -10,19 +10,17 @@ requirejs.config({
   },
 
   paths: {
-    'pixy': '../node_modules/pixy/dist/pixy',
-    'pixy-jasmine': '../node_modules/pixy/dist/pixy-jasmine',
+    'jasmine_rsvp': '../node_modules/jasmine-rsvp/dist/jasmine-rsvp-full',
+    'rsvp': '../node_modules/jasmine-rsvp/dist/jasmine-rsvp-full',
     'lodash': '../node_modules/lodash/dist/lodash',
     'jquery': '../node_modules/jquery/dist/jquery',
     'react': '../node_modules/pixy/vendor/react-0.10.0',
-    'router': '../node_modules/pixy/dist/pixy',
-    'rsvp': '../node_modules/pixy/dist/pixy',
     'inflection': '../node_modules/pixy/vendor/inflection',
   },
 
   deps: [
-    'pixy',
-    'pixy-jasmine'
+    'inflection',
+    'jasmine_rsvp'
   ],
 
   callback: function() {

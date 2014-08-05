@@ -3,7 +3,7 @@
 Turn a jasmine Suite into one suitable for testing React components.
 
 > WARNING!!!
-> This requires jasmine.promiseSuite to be available from [jasmine_rsvp](https://github.com/amireh/jasmine_rsvp).
+> This requires jasmine.promiseSuite to be available from [jasmine-rsvp](https://github.com/amireh/jasmine-rsvp).
 
 Example:
 
