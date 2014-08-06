@@ -1,22 +1,42 @@
+var _ = require('lodash');
+var merge = _.merge;
+
+var baseOptions = {
+  baseUrl: './lib',
+  mainConfigFile: '.requirejs',
+  removeCombined:           false,
+  inlineText:               true,
+  preserveLicenseComments:  false,
+
+  pragmas: {
+    production: true
+  },
+
+  paths: {
+    'underscore': 'empty:',
+    'lodash': 'empty:',
+    'jquery': 'empty:',
+    'rsvp': 'empty:',
+  },
+
+  name: 'jasmine_react'
+};
+
 module.exports = {
-  compile: {
-    options: {
-      baseUrl: './lib',
+  normal: {
+    options: merge({}, baseOptions, {
       out: 'dist/jasmine_react.js',
-      mainConfigFile: '.requirejs',
       optimize: 'none',
+      paths: {
+        'react': 'empty:',
+      }
+    })
+  },
 
-      removeCombined:           false,
-      inlineText:               true,
-      preserveLicenseComments:  false,
-
-      uglify: {
-        toplevel:         true,
-        ascii_only:       true,
-        beautify:         false,
-        max_line_length:  1000,
-        no_mangle:        false
-      },
+  with_react: {
+    options: merge({}, baseOptions, {
+      out: 'dist/jasmine_react.full.js',
+      optimize: 'uglify2',
 
       uglify2: {
         warnings: true,
@@ -35,20 +55,6 @@ module.exports = {
           join_vars:  true
         }
       },
-
-      pragmas: {
-        production: true
-      },
-
-      paths: {
-        'underscore': 'empty:',
-        'lodash': 'empty:',
-        'jquery': 'empty:',
-        'react': 'empty:',
-        'rsvp': 'empty:',
-      },
-
-      name: 'jasmine_react'
-    }
+    })
   }
 };
