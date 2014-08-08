@@ -47,5 +47,16 @@ define(function(require) {
         expect(find('span').innerText).toEqual('Hello Zaid');
       });
     });
+
+    describe('#options.initialProps', function() {
+      this.reactSuite({
+        type: Component,
+        initialProps: { foo: 'bar' }
+      });
+
+      it('should work', function() {
+        expect(subject.props.foo).toEqual('bar');
+      });
+    });
   });
 });
