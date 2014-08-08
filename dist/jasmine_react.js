@@ -480,10 +480,11 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
   var inspecting = startingSearch.match(/inspect=true/);
 
   /** @internal */
-  var ReactSuite = function(suite, componentType, container) {
+  var ReactSuite = function(suite, componentType, container, options) {
     suite.promiseSuite = true;
     suite.beforeEach(function() {
-      this.subject = React.renderComponent(componentType(), container);
+      var component = componentType(options.initialProps);
+      this.subject = React.renderComponent(component, container);
 
       Matchers.install(this, this.subject);
       DOMHelpers.install(GLOBAL, this.subject);
@@ -518,6 +519,9 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
    *
    * @param {React.Component} options.type (required)
    *        The component type that you're testing.
+   *
+   * @param {Object} [options.initialProps={}]
+   *        Initial props to create the component with.
    *
    * Invocation example:
    *
@@ -584,7 +588,7 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
       }
     }
 
-    ReactSuite(this, options.type, container);
+    ReactSuite(this, options.type, container, options);
   };
 
   return exports.reactSuite;
