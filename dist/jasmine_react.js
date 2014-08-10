@@ -154,6 +154,26 @@ define('jasmine_react/matchers',['require','underscore','rsvp'],function(require
           return result;
         }
       };
+    },
+
+    toExist: function() {
+      return {
+        compare: function(selector, options) {
+          if (typeof selector === 'string') {
+            return {
+              pass: !!find(selector)
+            };
+          }
+          else if (selector instanceof HTMLElement) {
+            return {
+              pass: !!selector
+            };
+          }
+          else {
+            throw new Error("Unknown type passed to #toExist()");
+          }
+        }
+      }
     }
   };
 
@@ -225,9 +245,12 @@ define('jasmine_react/dom_helpers',['require','react','jquery'],function(require
     $(node).click();
   };
 
-  helpers.check = function(selector) {
+  helpers.check = function(selector, isChecked) {
     var node = find(selector);
-    var isChecked = !node.checked;
+
+    if (arguments.length === 1) {
+      isChecked = !node.checked;
+    }
 
     $(node).prop('checked', isChecked);
     Simulate.change(node);
