@@ -91,5 +91,40 @@ define(function(require) {
         }).toSendAction('something');
       });
     });
+
+    describe('#toExist()', function() {
+      var Subject = React.createClass({
+        render: function() {
+          return React.DOM.div({
+            children: React.DOM.button({
+              className: 'btn',
+              onClick: this.doSomething
+            }, 'Click me.')
+          });
+        },
+      });
+
+      this.reactSuite({
+        type: Subject
+      });
+
+      it('should work with a selector', function() {
+        expect('.btn').toExist();
+      });
+
+      it('should work with an HTMLElement', function() {
+        expect(find('.btn')).toExist();
+      });
+
+      it('should reject anything else', function() {
+        expect(function() {
+          expect(123).toExist();
+        }).toThrowError(/unknown type/i)
+      });
+
+      it('should report failures', function() {
+        expect('.btnxxx').not.toExist();
+      });
+    });
   });
 });

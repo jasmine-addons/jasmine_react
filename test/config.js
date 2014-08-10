@@ -14,7 +14,7 @@ requirejs.config({
     'rsvp': '../node_modules/jasmine-rsvp/dist/jasmine-rsvp-full',
     'lodash': '../node_modules/lodash/dist/lodash',
     'jquery': '../node_modules/jquery/dist/jquery',
-    'react': '../node_modules/pixy/vendor/react-0.10.0',
+    'react': '../vendor/react-with-addons-0.11.1',
     'inflection': '../node_modules/pixy/vendor/inflection',
   },
 

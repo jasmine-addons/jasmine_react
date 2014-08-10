@@ -16,6 +16,7 @@ define(function(require) {
   });
 
   describe('jasmine.Suite.reactSuite', function() {
+    console.log('Jasmine-React: running against React v' + React.version);
     this.reactSuite({
       type: Component
     });

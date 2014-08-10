@@ -130,6 +130,13 @@ define(function(require) {
         expect(subject.state.categories).toEqual(['Food']);
         expect(find('[value="Food"]').checked).toBe(true);
       });
-    })
+
+      it('should accept the isChecked parameter', function() {
+        check('[value="Food"]', false);
+        expect(subject.state.categories).toEqual([]);
+        check('[value="Food"]', true);
+        expect(subject.state.categories).toEqual(['Food']);
+      });
+    });
   });
 });
