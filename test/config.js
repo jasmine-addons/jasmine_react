@@ -10,8 +10,8 @@ requirejs.config({
   },
 
   paths: {
-    'jasmine_rsvp': '../node_modules/jasmine-rsvp/dist/jasmine-rsvp-full',
-    'rsvp': '../node_modules/jasmine-rsvp/dist/jasmine-rsvp-full',
+    'jasmine_rsvp': '../node_modules/jasmine_rsvp/dist/jasmine_rsvp-full',
+    'rsvp': '../node_modules/jasmine_rsvp/dist/jasmine_rsvp-full',
     'lodash': '../node_modules/lodash/dist/lodash',
     'jquery': '../node_modules/jquery/dist/jquery',
     'react': '../vendor/react-with-addons-0.11.1',

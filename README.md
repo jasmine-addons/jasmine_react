@@ -115,7 +115,7 @@ it('should limit text to 10 chars', function() {
 > WARNING!!!
 > 
 > This requires jasmine.promiseSuite to be available from
-> [jasmine_rsvp](https://github.com/amireh/jasmine-rsvp).
+> [jasmine_rsvp](https://github.com/jasmine-addons/jasmine_rsvp).
 
 #### setProps(newProps)
 
@@ -156,7 +156,7 @@ expect('.something').toExist();
 > WARNING!!!
 > 
 > This requires jasmine.promiseSuite to be available from
-> [jasmine_rsvp](https://github.com/amireh/jasmine-rsvp).
+> [jasmine_rsvp](https://github.com/jasmine-addons/jasmine_rsvp).
 
 This is very opinionated and most likely won't apply to your code, but it does to mine so it's here. My components are glued to only "emit" actions when there's any sort of processing required. This allows me to decouple the UI (components) from actual domain logic handling, and consequently, it makes testing component interaction pretty slick.
 
