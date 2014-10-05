@@ -1,7 +1,15 @@
+define('jasmine_react/config',['require'],function(require) {
+  var config = {
+    getSendActionSpy: function(subject) {}
+  };
+
+  return config;
+});
 /* global jasmine: false */
-define('jasmine_react/matchers',['require','underscore','rsvp'],function(require) {
+define('jasmine_react/matchers',['require','underscore','rsvp','./config'],function(require) {
   var _ = require('underscore'); // _.template
   var RSVP = require('rsvp');
+  var config = require('./config');
   var currentSuite;
   var actionIndex, actionSpy, sendAction;
   var active, simulatedError;
@@ -32,6 +40,7 @@ define('jasmine_react/matchers',['require','underscore','rsvp'],function(require
 
   var ReactMatchers = {
     toSendAction: function(util/*, customEqualityTesters*/) {
+
       return {
         compare: function(callback, options) {
           var actionRc, actionArgs, actionCallIndex;
@@ -66,6 +75,13 @@ define('jasmine_react/matchers',['require','underscore','rsvp'],function(require
 
             return actionRc;
           }.bind(this, sendAction);
+
+          if (!actionSpy) {
+            throw new Error(
+              "You must configure jasmine_react.sendActionSpy " +
+              "in order to use the .toSendAction() matcher."
+            );
+          }
 
           simulatedError = active = false;
 
@@ -180,13 +196,18 @@ define('jasmine_react/matchers',['require','underscore','rsvp'],function(require
   return {
     matchers: ReactMatchers,
     install: function(suite, subject) {
+      var spy;
       currentSuite = suite;
       jasmine.addMatchers(ReactMatchers);
 
-      if (subject.sendAction) {
-        actionIndex = 0;
-        sendAction = subject.sendAction;
-        actionSpy = spyOn(subject, 'sendAction');
+      if (config.getSendActionSpy) {
+        spy = config.getSendActionSpy(subject);
+
+        if (spy) {
+          actionSpy = spy.spy;
+          sendAction = spy.original;
+          actionIndex = 0;
+        }
       }
     }
   };
@@ -486,16 +507,19 @@ define('jasmine_react/component_helpers',['require','react','lodash','jquery'],f
 
   return exports;
 });
+define('jasmine_react/namespace',[],function() {
+  return jasmine.Suite.prototype;
+});
 /* global jasmine: false, expect: false */
-define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_react/dom_helpers','./jasmine_react/prop_helpers','./jasmine_react/component_helpers'],function(require) {
+define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_react/dom_helpers','./jasmine_react/prop_helpers','./jasmine_react/component_helpers','./jasmine_react/namespace','./jasmine_react/config'],function(require) {
   var React = require('react');
   var Matchers = require('./jasmine_react/matchers');
   var DOMHelpers = require('./jasmine_react/dom_helpers');
   var PropHelpers = require('./jasmine_react/prop_helpers');
   var ComponentHelpers = require('./jasmine_react/component_helpers');
+  var exports = require('./jasmine_react/namespace');
+  var config = require('./jasmine_react/config');
   var startingSearch = window.location.search;
-
-  var exports = jasmine.Suite.prototype;
 
   /** @internal Used for exposing DOMHelpers into the global context */
   var GLOBAL = this;
@@ -535,7 +559,7 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
    * Turn a jasmine Suite into one suitable for testing React components.
    *
    * > WARNING!!!
-   * > This requires jasmine.promiseSuite to be available from jasmine-rsvp.
+   * > This requires jasmine.promiseSuite to be available from jasmine_rsvp.
    *
    * @param {Object} options
    *        Options to configure the suite.
@@ -613,6 +637,8 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
 
     ReactSuite(this, options.type, container, options);
   };
+
+  exports.reactSuite.config = config;
 
   return exports.reactSuite;
 });
