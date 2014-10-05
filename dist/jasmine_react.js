@@ -1,6 +1,9 @@
 define('jasmine_react/config',['require'],function(require) {
   var config = {
-    getSendActionSpy: function(subject) {}
+    getSendActionSpy: function(subject) {},
+    decorateSendActionRc: function(rc) {
+      return rc;
+    }
   };
 
   return config;
@@ -112,6 +115,8 @@ define('jasmine_react/matchers',['require','underscore','rsvp','./config'],funct
           else {
             actionRc = RSVP.resolve();
           }
+
+          actionRc = config.decorateSendActionRc(actionRc);
 
           // actionSpy = spyOn(subject, 'sendAction').and.callFake(actionInterceptor);
           actionSpy.and.callFake(actionInterceptor);
