@@ -4,6 +4,25 @@ define(function(require) {
 
   describe('JasmineReact.Matchers', function() {
     describe('@toSendAction', function() {
+      var originalSpy;
+      var Dispatcher = {
+        dispatch: function(evt, args) {}
+      };
+
+      beforeEach(function() {
+        originalSpy = ReactSuite.config.sendActionSpy;
+        ReactSuite.config.getSendActionSpy = function(subject) {
+          return {
+            original: Dispatcher.dispatch.bind(Dispatcher),
+            spy: spyOn(Dispatcher, 'dispatch')
+          };
+        }
+      });
+
+      afterEach(function() {
+        ReactSuite.config.sendActionSpy = originalSpy;
+      });
+
       this.reactSuite({
         type: React.createClass({
           render: function() {
@@ -14,14 +33,14 @@ define(function(require) {
             });
           },
 
-          sendAction: function() {
-            // stub ...
+          sendAction: function(evt, args) {
+            Dispatcher.dispatch(evt, args);
           },
 
           doSomething: function(e) {
             e.preventDefault();
 
-            this.sendAction('something').then(function() {
+            Dispatcher.dispatch('something').then(function() {
               this.setState({ foo: this.props.bar });
             });
           }
@@ -30,7 +49,7 @@ define(function(require) {
 
       it('should work', function() {
         expect(function() {
-          subject.sendAction('foo');
+          Dispatcher.dispatch('foo');
         }).toSendAction('foo');
       });
 
@@ -85,9 +104,8 @@ define(function(require) {
 
       it('should not intercept other action requests', function() {
         expect(function() {
-          subject.sendAction('something').then(function() {
-            subject.sendAction('somethingElse');
-          });
+          subject.sendAction('something');
+          subject.sendAction('somethingElse');
         }).toSendAction('something');
       });
     });
