@@ -222,6 +222,7 @@ define('jasmine_react/dom_helpers',['require','react','jquery'],function(require
   var $ = require('jquery');
   var TestUtils = React.addons.TestUtils;
   var Simulate = TestUtils.Simulate;
+  var SimulateNative = TestUtils.SimulateNative;
 
   var exports = {};
   var helpers = {};
@@ -254,11 +255,15 @@ define('jasmine_react/dom_helpers',['require','react','jquery'],function(require
   /**
    * Simulate a mouse-click on any HTMLElement.
    */
-  helpers.click = function(selector) {
+  helpers.click = function(selector, simulateNative) {
     var node = find(selector);
 
     if (!node) {
       throw new Error('You are attempting to click on a node that does not exist! Selector: ' + selector);
+    }
+
+    if (simulateNative === true) {
+      return SimulateNative.click(node);
     }
 
     return Simulate.click(node);
