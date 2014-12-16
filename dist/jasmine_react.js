@@ -237,7 +237,14 @@ define('jasmine_react/dom_helpers',['require','react','jquery'],function(require
    * @return {HTMLElement|NilClass}
    */
   var findAll = helpers.findAll = function(selector) {
-    return $(subject.getDOMNode()).find(selector);
+    var $subject = $(subject.getDOMNode());
+    var $node = $subject.find(selector);
+
+    if ($node.length === 0 && $subject.is(selector)) {
+      return $subject;
+    }
+
+    return $node;
   };
 
   /**

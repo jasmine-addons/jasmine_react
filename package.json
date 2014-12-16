@@ -1,7 +1,7 @@
 {
   "name": "jasmine_react",
   "description": "Jasmine utilities and helpers for testing React components.",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "homepage": "https://github.com/jasmine-addons/jasmine_react",
   "author": {
     "name": "Ahmad Amireh",
