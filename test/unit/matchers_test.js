@@ -114,6 +114,7 @@ define(function(require) {
       var Subject = React.createClass({
         render: function() {
           return React.DOM.div({
+            className: 'root-element',
             children: React.DOM.button({
               className: 'btn',
               onClick: this.doSomething
@@ -142,6 +143,10 @@ define(function(require) {
 
       it('should report failures', function() {
         expect('.btnxxx').not.toExist();
+      });
+
+      it('should work with the subject element', function() {
+        expect('.root-element').toExist();
       });
     });
   });

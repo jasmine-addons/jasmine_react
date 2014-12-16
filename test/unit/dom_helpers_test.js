@@ -3,6 +3,42 @@ define(function(require) {
   var ReactSuite = require('jasmine_react');
 
   describe('JasmineReact.DOMHelpers', function() {
+    describe('#find', function() {
+      this.reactSuite({
+        type: React.createClass({
+          mixins: [ React.addons.LinkedStateMixin ],
+          getInitialState: function() {
+            return {
+              name: null
+            };
+          },
+
+          render: function() {
+            return React.DOM.div({
+              className: 'root-element',
+              children: [
+                React.DOM.div({
+                  className: "some-child"
+                })
+              ]
+            });
+          }
+        })
+      });
+
+      it('should find children', function() {
+        expect(find('.some-child')).toBeTruthy();
+      });
+
+      it('should find itself', function() {
+        expect(find('.root-element')).toEqual(subject.getDOMNode());
+      });
+
+      it('should return undefined when nothing is found', function() {
+        expect(find('.foo')).toBeFalsy();
+      });
+    });
+
     describe('#typeIn', function() {
       this.reactSuite({
         type: React.createClass({
