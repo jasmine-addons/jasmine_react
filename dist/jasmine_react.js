@@ -643,19 +643,24 @@ define('jasmine_react',['require','react','./jasmine_react/matchers','./jasmine_
     container = options.container || jasmine.fixture;
 
     if (!container) {
-      container = document.createElement('div');
-      container.className = 'fixture';
-      container.id = 'jasmine_content';
-
-      if (inspecting) {
-        document.body.appendChild(container);
-      }
+      container = exports.reactSuite.createDOMFixture();
     }
 
     ReactSuite(this, options.type, container, options);
   };
 
   exports.reactSuite.config = config;
+  exports.reactSuite.createDOMFixture = function() {
+    var container = document.createElement('div');
+    container.className = 'fixture';
+    container.id = 'jasmine_content';
+
+    if (inspecting) {
+      document.body.appendChild(container);
+    }
+
+    return container;
+  };
 
   return exports.reactSuite;
 });
